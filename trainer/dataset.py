@@ -147,7 +147,7 @@ class OCRDataset(Dataset):
         self.opt = opt
         print(root)
 #         self.df = pd.read_csv(os.path.join(root,'train.csv'), sep='^([^,]+),', engine='python', usecols=['id', 'txt'], keep_default_na=False)
-        self.df = pd.read_csv(os.path.join(root,'train.csv'), sep='\t', engine='python', usecols=['id', 'txt'], keep_default_na=False)
+        self.df = pd.read_csv(os.path.join(root,'labels.csv'), sep='\t', engine='python', usecols=['id', 'txt'], keep_default_na=False)
         self.nSamples = len(self.df)
 
         if self.opt.data_filtering_off:
