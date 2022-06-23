@@ -155,7 +155,7 @@ class OCRDataset(Dataset):
         else:
             self.filtered_index_list = []
             for index in range(self.nSamples):
-                label = self.df.at[index,'words']
+                label = self.df.at[index,'txt']
                 try:
                     if len(label) > self.opt.batch_max_length:
                         continue
@@ -172,9 +172,9 @@ class OCRDataset(Dataset):
 
     def __getitem__(self, index):
         index = self.filtered_index_list[index]
-        img_fname = self.df.at[index,'filename']
+        img_fname = self.df.at[index,'id']
         img_fpath = os.path.join(self.root, img_fname)
-        label = self.df.at[index,'words']
+        label = self.df.at[index,'txt']
 
         if self.opt.rgb:
             img = Image.open(img_fpath).convert('RGB')  # for color image
