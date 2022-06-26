@@ -1,6 +1,6 @@
 number: '0123456789'
 symbol: "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ €"
-lang_char: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรฤลวศษสหฬอฮฯะ ัา ำ ิ ี ึ ื ุ ู ฺเแโใไๆ ็ ่ ้ ๊ ๋ ์ ํ๑๒๓๔๕๖๗๘๙'
+lang_char: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรฤลวศษสหฬอฮฯะ ัา ำ ิ ี ึ ื ุ ู ฺเแโใไๆ ็ ่ ้ ๊ ๋ ์ ํ0123456789๑๒๓๔๕๖๗๘๙'
 experiment_name: 'en_filtered'
 train_data: 'all_data'
 valid_data: 'all_data/en_val'
