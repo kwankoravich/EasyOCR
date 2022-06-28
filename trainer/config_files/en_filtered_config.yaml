@@ -37,8 +37,8 @@ SequenceModeling: 'BiLSTM'
 Prediction: 'CTC'
 num_fiducial: 20
 input_channel: 1
-output_channel: 256
-hidden_size: 256
+output_channel: 512
+hidden_size: 512
 decode: 'greedy'
 new_prediction: False
 freeze_FeatureFxtraction: False
