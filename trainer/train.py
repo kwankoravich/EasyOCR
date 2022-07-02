@@ -90,7 +90,7 @@ def train(opt, show_number = 2, amp=False):
     log.write('-' * 80 + '\n')
     log.close()
     
-    custom_character = "¢£¤¥!"#$%&'()*+,-./:;<=>?@[]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮฤเแโใไะาุูิำํฺฯๆ0123456789๑๒๓๔๕๖๗๘๙"
+    custom_character = "¢£¤¥!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮฤเแโใไะาุูิำํฺฯๆ0123456789๑๒๓๔๕๖๗๘๙"
     """ model configuration """
     if 'CTC' in opt.Prediction:
         converter = CTCLabelConverter(opt.character)
