@@ -9,7 +9,9 @@ import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
 from torch.cuda.amp import autocast, GradScaler
-from easyocr.recognition import get_recognizer
+# from easyocr.recognition import get_recognizer
+import importlib
+from collections import OrderedDict
 import numpy as np
 
 from utils import CTCLabelConverter, AttnLabelConverter, Averager
@@ -29,6 +31,39 @@ def count_parameters(model):
         print(name, param)
     print(f"Total Trainable Params: {total_params}")
     return total_params
+
+def get_recognizer(recog_network, network_params, character,\
+                   separator_list, dict_list, model_path,\
+                   device = 'cpu', quantize = True):
+
+    converter = CTCLabelConverter(character, separator_list, dict_list)
+    num_class = len(converter.character)
+
+    if recog_network == 'generation1':
+        model_pkg = importlib.import_module("easyocr.model.model")
+    elif recog_network == 'generation2':
+        model_pkg = importlib.import_module("easyocr.model.vgg_model")
+    else:
+        model_pkg = importlib.import_module(recog_network)
+    model = model_pkg.Model(num_class=num_class, **network_params)
+
+    if device == 'cpu':
+        state_dict = torch.load(model_path, map_location=device)
+        new_state_dict = OrderedDict()
+        for key, value in state_dict.items():
+            new_key = key[7:]
+            new_state_dict[new_key] = value
+        model.load_state_dict(new_state_dict)
+        if quantize:
+            try:
+                torch.quantization.quantize_dynamic(model, dtype=torch.qint8, inplace=True)
+            except:
+                pass
+    else:
+        model = torch.nn.DataParallel(model).to(device)
+        model.load_state_dict(torch.load(model_path, map_location=device))
+
+    return model, converter
 
 def train(opt, show_number = 2, amp=False):
     """ dataset preparation """
