@@ -9,6 +9,7 @@ import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
 from torch.cuda.amp import autocast, GradScaler
+from easyocr.recognition import get_recognizer
 import numpy as np
 
 from utils import CTCLabelConverter, AttnLabelConverter, Averager
@@ -52,6 +53,7 @@ def train(opt, show_number = 2, amp=False):
     log.write('-' * 80 + '\n')
     log.close()
     
+    custom_character = "¢£¤¥!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮฤเแโใไะาุูิำํฺฯๆ0123456789๑๒๓๔๕๖๗๘๙"
     """ model configuration """
     if 'CTC' in opt.Prediction:
         converter = CTCLabelConverter(opt.character)
@@ -61,7 +63,8 @@ def train(opt, show_number = 2, amp=False):
 
     if opt.rgb:
         opt.input_channel = 3
-    model = Model(opt)
+#     model = Model(opt)
+    model, _ = get_recognizer('generation1', {'input_channel': 1, 'output_channel': 512, 'hidden_size': 512}, custom_character , {}, {'th': '/content/EasyOCR/easyocr/dict/th.txt'}, opt.saved_model, device = device)
     print('model input parameters', opt.imgH, opt.imgW, opt.num_fiducial, opt.input_channel, opt.output_channel,
           opt.hidden_size, opt.num_class, opt.batch_max_length, opt.Transformation, opt.FeatureExtraction,
           opt.SequenceModeling, opt.Prediction)
@@ -71,7 +74,7 @@ def train(opt, show_number = 2, amp=False):
         if opt.new_prediction:
             model.Prediction = nn.Linear(model.SequenceModeling_output, len(pretrained_dict['module.Prediction.weight']))  
         
-        model = torch.nn.DataParallel(model).to(device) 
+#         model = torch.nn.DataParallel(model).to(device) 
         print(f'loading pretrained model from {opt.saved_model}')
         if opt.FT:
             model.load_state_dict(pretrained_dict, strict=False)
