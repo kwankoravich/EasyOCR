@@ -36,8 +36,9 @@ def get_recognizer(recog_network, network_params, character,\
                    separator_list, dict_list, model_path,\
                    device = 'cpu', quantize = True):
 
-    converter = CTCLabelConverter(character, separator_list, dict_list)
-    num_class = len(converter.character)
+#     converter = CTCLabelConverter(character, separator_list, dict_list)
+#     num_class = len(converter.character)
+    num_class = len(['[blank]'] + list(character))
 
     if recog_network == 'generation1':
         model_pkg = importlib.import_module("easyocr.model.model")
@@ -63,7 +64,8 @@ def get_recognizer(recog_network, network_params, character,\
         model = torch.nn.DataParallel(model).to(device)
         model.load_state_dict(torch.load(model_path, map_location=device))
 
-    return model, converter
+#     return model, converter
+    return model
 
 def train(opt, show_number = 2, amp=False):
     """ dataset preparation """
