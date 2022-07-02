@@ -101,6 +101,7 @@ def train(opt, show_number = 2, amp=False):
     if opt.rgb:
         opt.input_channel = 3
 #     model = Model(opt)
+#    model, _ = get_recognizer('generation1', {'input_channel': 1, 'output_channel': 512, 'hidden_size': 512}, custom_character , {}, {'th': '/content/EasyOCR/easyocr/dict/th.txt'}, opt.saved_model, device = device)
     model, _ = get_recognizer('generation1', {'input_channel': 1, 'output_channel': 512, 'hidden_size': 512}, custom_character , {}, {'th': '/content/EasyOCR/easyocr/dict/th.txt'}, opt.saved_model, device = device)
     print('model input parameters', opt.imgH, opt.imgW, opt.num_fiducial, opt.input_channel, opt.output_channel,
           opt.hidden_size, opt.num_class, opt.batch_max_length, opt.Transformation, opt.FeatureExtraction,
