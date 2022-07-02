@@ -9,7 +9,7 @@ import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
 from torch.cuda.amp import autocast, GradScaler
-# from easyocr.recognition import get_recognizer
+from easyocr.recognition import get_recognizer
 import importlib
 from collections import OrderedDict
 import numpy as np
@@ -32,6 +32,7 @@ def count_parameters(model):
     print(f"Total Trainable Params: {total_params}")
     return total_params
 
+'''
 def get_recognizer(recog_network, network_params, character,\
                    separator_list, dict_list, model_path,\
                    device = 'cpu', quantize = True):
@@ -66,6 +67,7 @@ def get_recognizer(recog_network, network_params, character,\
 
 #     return model, converter
     return model
+'''
 
 def train(opt, show_number = 2, amp=False):
     """ dataset preparation """
@@ -93,9 +95,9 @@ def train(opt, show_number = 2, amp=False):
     custom_character = """¢£¤¥!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮฤเแโใไะาุูิีืึั่้๊๋็์ำํฺฯๆ0123456789๑๒๓๔๕๖๗๘๙"""
     """ model configuration """
     if 'CTC' in opt.Prediction:
-        converter = CTCLabelConverter(opt.character)
+        converter = CTCLabelConverter(custom_character)
     else:
-        converter = AttnLabelConverter(opt.character)
+        converter = AttnLabelConverter(custom_character)
     opt.num_class = len(converter.character)
 
     if opt.rgb:
