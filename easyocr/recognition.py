@@ -66,6 +66,7 @@ class AlignCollate(object):
         self.imgW = imgW
         self.keep_ratio_with_pad = keep_ratio_with_pad
         self.adjust_contrast = adjust_contrast
+#         self.custom_character = "¢£¤¥!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZกขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮฤเแโใไะาุูิีืึั่้๊๋็์ำํฺฯๆ0123456789๑๒๓๔๕๖๗๘๙"
 
     def __call__(self, batch):
         batch = filter(lambda x: x is not None, batch)
@@ -178,7 +179,7 @@ def get_recognizer(recog_network, network_params, character,\
             except:
                 pass
     else:
-#         model = torch.nn.DataParallel(model).to(device)
+        model = torch.nn.DataParallel(model).to(device)
         model.load_state_dict(torch.load(model_path, map_location=device))
 
     return model, converter
