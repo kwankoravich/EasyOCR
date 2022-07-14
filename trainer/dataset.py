@@ -146,10 +146,10 @@ class OCRDataset(Dataset):
         self.root = root
         self.opt = opt
         print(root)
-        own_path = 'all_data/en_train_filtered'
+        self.own_path = 'all_data/en_train_filtered'
 #         self.df = pd.read_csv(os.path.join(root,'train.csv'), sep='^([^,]+),', engine='python', usecols=['id', 'txt'], keep_default_na=False)
 #         self.df = pd.read_csv(os.path.join(root,'labels.csv'), sep='\t', engine='python', usecols=['id', 'txt'], keep_default_na=False)
-        self.df = pd.read_csv(os.path.join(own_path,'labels.csv'), engine='python', usecols=['id', 'txt'], keep_default_na=False)
+        self.df = pd.read_csv(os.path.join(self.own_path,'label.csv'), engine='python', usecols=['id', 'txt'], keep_default_na=False)
         self.nSamples = len(self.df)
 
         if self.opt.data_filtering_off:
@@ -175,7 +175,8 @@ class OCRDataset(Dataset):
     def __getitem__(self, index):
         index = self.filtered_index_list[index]
         img_fname = self.df.at[index,'id']
-        img_fpath = os.path.join(self.root, img_fname)
+#         img_fpath = os.path.join(self.root, img_fname)
+        img_fpath = os.path.join(self.own_path, img_fname)
         label = self.df.at[index,'txt']
 
         if self.opt.rgb:
