@@ -180,7 +180,7 @@ def get_recognizer(recog_network, network_params, character,\
                 pass
     else:
         model = torch.nn.DataParallel(model).to(device)
-        model.load_state_dict(torch.load("best_accuracy_4.pth", map_location=device))
+        model.load_state_dict(torch.load("best_accuracy.pth", map_location=device))
 
     return model, converter
 
